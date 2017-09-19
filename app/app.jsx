@@ -1,21 +1,23 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var {Provider} = require('react-redux');
-var {Route, Router, IndexRoute, hashHistory} = require('react-router');
+const React = require('react');
+const ReactDOM = require('react-dom');
+const { Route, Router, IndexRoute, hashHistory } = require('react-router');
+const { Provider } = require('react-redux');
 
-var TodoApp = require('TodoApp');
+const TodoApp = require('TodoApp');
 
-var actions = require('actions');
-var store = require('configureStore').configure();
-
+// 加入redux的store
+const actions = require('actions');
+//要使用configure method才可以讓store可以用
+const store = require('configureStore').configure();
 store.subscribe(() => {
-  console.log('New state', store.getState());
+  console.log('new state', store.getState());
 });
-
-store.dispatch(actions.addTodo('Clean the yard'));
-store.dispatch(actions.setSearchText('yard'));
+let state = store.getState();
+console.log(state);
+store.dispatch(actions.addTodo('掃地'));
+store.dispatch(actions.setSearchText('掃'));
 store.dispatch(actions.toggleShowCompleted());
-
+// store.dispatch(actions.toggleTodo());
 // Load foundation
 $(document).foundation();
 
@@ -23,8 +25,8 @@ $(document).foundation();
 require('style!css!sass!applicationStyles')
 
 ReactDOM.render(
-  <Provider store={store}>
-    <TodoApp/>
+  <Provider store={ store }>
+      <TodoApp/>
   </Provider>,
   document.getElementById('app')
 );
